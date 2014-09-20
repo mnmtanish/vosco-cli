@@ -1,0 +1,28 @@
+{
+  "name": "vosco-cli",
+  "version": "1.0.0",
+  "description": "CLI client for vosco",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mnmtanish/vosco-cli.git"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "bin": {
+    "vosco": "./index.js"
+  },
+  "author": "Muhammed Thanish",
+  "license": "GPL v3",
+  "bugs": {
+    "url": "https://github.com/mnmtanish/vosco-cli/issues"
+  },
+  "homepage": "https://github.com/mnmtanish/vosco-cli",
+  "devDependencies": {
+    "mocha": "1.21.x"
+  },
+  "dependencies": {
+    "vosco": "1.1.x",
+    "iced-coffee-script": "1.7.x"
+  }
+}
