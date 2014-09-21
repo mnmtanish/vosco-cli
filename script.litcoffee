@@ -75,7 +75,7 @@ Snapshots
       'rollback-to-snapshot': (hash) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "rollback to snapshot"
+        await @vosco.rollbackToSnapshot hash, defer(error)
 
 Branches
 --------
