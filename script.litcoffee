@@ -80,20 +80,20 @@ Snapshots
 Branches
 --------
 
-      'list-branches': () ->
+      'get-branches': () ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
         console.log "branches list"
-
-      'select-branch': (branch) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        console.log "select branch"
 
       'create-branch': (branch) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
         console.log "create new branch"
+
+      'select-branch': (branch) ->
+        await @vosco.isInstalled defer(error, isInstalled)
+        unless isInstalled then process.exit 1
+        console.log "select branch"
 
       'delete-branch': (branch) ->
         await @vosco.isInstalled defer(error, isInstalled)
