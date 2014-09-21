@@ -4,107 +4,50 @@ Dependencies
     _      = require "underscore"
     colors = require "cli-color"
 
-VOSCO
-=====
+Script
+======
 
-    script =
+    script = {}
 
-Setup
------
+    script['install'] = () ->
+      await @vosco.install defer(error)
 
-      'install': () ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        if isInstalled then process.exit 1
-        await @vosco.install defer(error)
+    script['uninstall'] = () ->
+      await @vosco.uninstall defer(error)
 
-      'uninstall': () ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.uninstall defer(error)
+    script['get-status'] = () ->
+      await @vosco.getStatus defer(error)
 
-Repository
-----------
+    script['get-history'] = () ->
+      await @vosco.getHistory defer(error)
 
-      'get-status': () ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.getStatus defer(error, status)
-        getType = (file) -> file.type
-        getPath = (file) -> colors.xterm(240)("  #{file.path}")
-        groups  = _.groupBy status, getType
-        for group, paths of groups
-          console.log """
-          #{group}
-          #{paths.map(getPath).join("\n")}
-          """
+    script['get-content-history'] = (path) ->
+      await @vosco.getContentHistory path, defer(error)
 
-      'get-history': () ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.getHistory defer(error, history)
-        for commit in history
-          hash = commit.hash.substr(0, 7)
-          date = new Date(commit.date).toDateString()
-          msg  = commit.message
-          console.log colors.xterm(240)("  #{hash}  #{date}  #{msg}")
+    script['preview-snapshot'] = (hash) ->
+      await @vosco.previewSnapshot hash, defer(error)
 
-      'get-content-history': (path) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        # show warning if file doesn"t exist
-        console.log "content history"
+    script['create-snapshot'] = (message) ->
+      await @vosco.createSnapshot message, defer(error)
 
-Snapshots
----------
+    script['rollback-to-snapshot'] = (hash) ->
+      await @vosco.rollbackToSnapshot hash, defer(error)
 
-      'preview-snapshot': (hash) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        hash = hash or 'HEAD'
-        await @vosco.previewSnapshot hash, defer(error, diff)
-        console.log diff
+    script['get-branches'] = () ->
+      await @vosco.getBranches defer(error)
 
-      'create-snapshot': (message) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        message = message or 'Untitled Snapshot'
-        await @vosco.createSnapshot message, defer(error)
+    script['create-branch'] = (branch) ->
+      await @vosco.createBranch branch, defer(error)
 
-      'rollback-to-snapshot': (hash) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.rollbackToSnapshot hash, defer(error)
+    script['select-branch'] = (branch) ->
+      await @vosco.selectBranch branch, defer(error)
 
-Branches
---------
-
-      'get-branches': () ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.getBranches defer(error, branches, current)
-        for branch in branches
-          branch = if branch is current then "* #{branch}" else
-            colors.xterm(240)("  #{branch}")
-          console.log "#{branch}"
-
-      'create-branch': (branch) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.createBranch branch, defer(error)
-
-      'select-branch': (branch) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.selectBranch branch, defer(error)
-
-      'delete-branch': (branch) ->
-        await @vosco.isInstalled defer(error, isInstalled)
-        unless isInstalled then process.exit 1
-        await @vosco.deleteBranch branch, defer(error)
+    script['delete-branch'] = (branch) ->
+      await @vosco.deleteBranch branch, defer(error)
 
 Export Module
 -------------
 
     module.exports = (vosco) ->
-      script.vosco = vosco
+      script.vosco = require("./vosco-cli")(vosco)
       return script
