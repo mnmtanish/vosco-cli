@@ -14,11 +14,11 @@ Sanity Checks
 
 VOSCO must always be run by the **root** user. Using `sudo` is also acceptable. VOSCO is designed to manage system wide configurations and needs read/write access to many restricted files of the system.
 
-    # do ->
-    #   await exec "id -u", defer(error, stdout, stderr)
-    #   unless parseInt(stdout) is 0
-    #     console.log "VOSCO must be run as root user"
-    #     process.exit()
+    do ->
+      await exec "id -u", defer(error, stdout, stderr)
+      unless parseInt(stdout) is 0
+        console.log "VOSCO must be run as root user"
+        process.exit()
 
 Initialize VOSCO
 ----------------
