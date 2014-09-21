@@ -1,6 +1,6 @@
 {
   "name": "vosco-cli",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "CLI client for vosco",
   "repository": {
     "type": "git",
