@@ -2,8 +2,6 @@ Dependencies
 ============
 
     _      = require "underscore"
-    fs     = require "fs"
-    path   = require "path"
     colors = require "cli-color"
 
 VOSCO
