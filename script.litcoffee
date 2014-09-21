@@ -62,7 +62,9 @@ Snapshots
       'preview-snapshot': (hash) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "preview snapshot"
+        hash = hash or 'HEAD'
+        await @vosco.previewSnapshot hash, defer(error, diff)
+        console.log diff
 
       'create-snapshot': (message) ->
         await @vosco.isInstalled defer(error, isInstalled)
