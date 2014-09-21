@@ -83,7 +83,11 @@ Branches
       'get-branches': () ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "branches list"
+        await @vosco.getBranches defer(error, branches, current)
+        for branch in branches
+          branch = if branch is current then "* #{branch}" else
+            colors.xterm(240)("  #{branch}")
+          console.log "#{branch}"
 
       'create-branch': (branch) ->
         await @vosco.isInstalled defer(error, isInstalled)
