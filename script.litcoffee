@@ -69,7 +69,8 @@ Snapshots
       'create-snapshot': (message) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "creating snapshot"
+        message = message or 'Untitled Snapshot'
+        await @vosco.createSnapshot message, defer(error)
 
       'rollback-to-snapshot': (hash) ->
         await @vosco.isInstalled defer(error, isInstalled)
