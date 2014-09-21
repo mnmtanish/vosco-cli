@@ -6,9 +6,6 @@ Dependencies
     {exec} = require "child_process"
     VOSCO  = require "vosco"
 
-    Shell  = require "./lib/shell"
-    Script = require "./lib/script"
-
 Sanity Checks
 -------------
 
@@ -22,6 +19,8 @@ VOSCO must always be run with **root** previliges. It is expected to run with `s
 Initialize VOSCO
 ----------------
 
+Create a new VOSCO instance called `vosco` which will be doing all the hard work. No need to set environment variables before running unless you're testing or doing something different using VOSCO.
+
     vosco = do ->
       repo_path = process.env.VOSCO_ROOT_DIR || '/'
       repo_opts =
@@ -29,13 +28,15 @@ Initialize VOSCO
         author_email: "#{process.env.USER}@localhost"
       return new VOSCO repo_path, repo_opts
 
-    shell  = Shell(vosco)
-    script = Script(vosco)
+Shell Mode / Script Mode
+------------------------
 
-Script or Interactive
----------------------
+The shell mode is interactive. It will guide users using helpful menus and messages. This mode is difficult and not suitable for scripting. Script mode is suitable for scripting and for non-interactive use. Output form this mode is always clean and easy to parse using other programs.
 
-If no arguments are given, we assume that user wishes to enter an interactive shell to run VOSCO commands. Otherwise assume user needs to run specific commands.
+    shell  = require("./lib/shell")(vosco)
+    script = require("./lib/script")(vosco)
+
+If no arguments are given, we assume that user wishes to enter an interactive shell to run VOSCO commands. Otherwise assume user needs to run specific commands using script mode. Show the help text if user enters an invalid command.
 
     command = process.argv[2]
     args    = process.argv.slice 3
