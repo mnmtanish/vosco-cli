@@ -92,17 +92,17 @@ Branches
       'create-branch': (branch) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "create new branch"
+        await @vosco.createBranch branch, defer(error)
 
       'select-branch': (branch) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "select branch"
+        await @vosco.selectBranch branch, defer(error)
 
       'delete-branch': (branch) ->
         await @vosco.isInstalled defer(error, isInstalled)
         unless isInstalled then process.exit 1
-        console.log "delete branch"
+        await @vosco.deleteBranch branch, defer(error)
 
 Export Module
 -------------
