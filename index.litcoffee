@@ -6,8 +6,8 @@ Dependencies
     {exec} = require "child_process"
     VOSCO  = require "vosco"
 
-    Shell  = require "./shell"
-    Script = require "./script"
+    Shell  = require "./lib/shell"
+    Script = require "./lib/script"
 
 Sanity Checks
 -------------
