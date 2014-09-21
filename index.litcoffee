@@ -12,13 +12,12 @@ Dependencies
 Sanity Checks
 -------------
 
-VOSCO must always be run by the **root** user. Using `sudo` is also acceptable. VOSCO is designed to manage system wide configurations and needs read/write access to many restricted files of the system.
+VOSCO must always be run with **root** previliges. It is expected to run with `sudo` command by logged in user. VOSCO is designed to manage system wide configurations and needs read/write access to many restricted files. The program will stop unless the user id is zero.
 
-    do ->
-      await exec "id -u", defer(error, stdout, stderr)
-      unless parseInt(stdout) is 0
-        console.log "VOSCO must be run as root user"
-        process.exit()
+    await exec "id -u", defer(error, userId)
+    unless parseInt(userId) is 0
+      console.error "VOSCO must be run as root user"
+      process.exit 1
 
 Initialize VOSCO
 ----------------
@@ -27,7 +26,7 @@ Initialize VOSCO
       repo_path = process.env.VOSCO_ROOT_DIR || '/'
       repo_opts =
         author_name : process.env.USER
-        author_email: "#{process.env.USER}@#{process.env.HOSTNAME}"
+        author_email: "#{process.env.USER}@localhost"
       return new VOSCO repo_path, repo_opts
 
     shell  = Shell(vosco)
@@ -44,7 +43,7 @@ If no arguments are given, we assume that user wishes to enter an interactive sh
     if command is undefined
       shell.init()
     else if typeof script[command] is 'function'
-      script[command](args)
+      script[command].apply script, args
     else do ->
       filePath = path.resolve __dirname, "help-text.txt"
       helpText = fs.readFileSync filePath
