@@ -22,7 +22,9 @@
     "mocha": "1.21.x"
   },
   "dependencies": {
-    "vosco": "1.1.x",
-    "iced-coffee-script": "1.7.x"
+    "cli-color": "0.3.x",
+    "iced-coffee-script": "1.7.x",
+    "inquirer": "0.7.x",
+    "vosco": "1.4.x"
   }
 }
