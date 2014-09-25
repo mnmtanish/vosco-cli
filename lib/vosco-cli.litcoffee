@@ -59,8 +59,8 @@ Repository
     voscoCLI.getContentHistory = (path, callback) ->
       await @original.isInstalled defer(error, isInstalled)
       unless isInstalled then process.exit 1
-      # show warning if file doesn"t exist
-      console.log "content history for #{path}"
+      await @original.getContentHistory path, defer(error, history)
+      console.log history
       callback null
 
 Snapshots
