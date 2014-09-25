@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "cli-color": "0.3.x",
-    "iced-coffee-script": "1.7.x",
+    "iced-coffee-script": "1.7.1-g",
     "inquirer": "0.7.x",
     "underscore": "1.7.x",
     "vosco": "1.4.x"
