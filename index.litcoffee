@@ -22,7 +22,7 @@ Initialize VOSCO
 Create a new VOSCO instance called `vosco` which will be doing all the hard work. No need to set environment variables before running unless you're testing or doing something different using VOSCO.
 
     vosco = do ->
-      repo_path = process.env.VOSCO_ROOT_DIR || '/'
+      repo_path = process.env.VOSCO_ROOT_DIR or '/'
       repo_opts =
         author_name : process.env.USER
         author_email: "#{process.env.USER}@localhost"
